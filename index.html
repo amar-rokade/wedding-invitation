@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Amar & Rutuja | Royal Wedding</title>
     
+    <link rel="icon" type="image/png" href="images/golden-buddha-statue-abstract-vector-600nw-2455237565-removebg-preview.png">
+    <meta property="og:title" content="Amar & Rutuja | Royal Wedding Invitation">
+    <meta property="og:description" content="14 & 15 March 2026 | Nashik. With the blessings of Lord Buddha.">
+    <meta property="og:image" content="golden-buddha-statue-abstract-vector-600nw-2455237565-removebg-preview.png">
+    <meta property="og:type" content="website">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi:ital@0;1&display=swap" rel="stylesheet">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -75,24 +80,29 @@
 
         /* --- PHOTO FRAME (ARCH) --- */
         .arch-frame {
-            width: 200px;
-            height: 250px;
-            border-radius: 100px 100px 0 0; 
+            width: 220px;
+            height: 260px;
+            border-radius: 110px 110px 0 0; 
             border: 4px solid var(--gold);
-            padding: 5px;
+            padding: 0;
             background: white;
             box-shadow: 0 15px 35px rgba(94, 0, 0, 0.2);
             position: relative;
             margin-bottom: 2rem;
             overflow: hidden;
+            display: flex;
+            align-items: flex-end; /* Align image to bottom */
+            justify-content: center;
             background: radial-gradient(circle, #fff, #fff5e6);
         }
 
-        .arch-frame svg {
-            width: 80%;
-            height: 80%;
-            margin-top: 20%;
-            filter: drop-shadow(0 5px 5px rgba(212, 175, 55, 0.5));
+        .arch-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensures PNG transparency works best */
+            object-position: center bottom;
+            border-radius: 100px 100px 0 0;
+            filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.4)); /* Adds a slight golden shadow to the statue */
         }
 
         /* --- TYPOGRAPHY --- */
@@ -208,14 +218,7 @@
         
         <section class="hero">
             <div class="arch-frame" id="buddhaFrame">
-                <svg viewBox="0 0 200 200" fill="none" stroke="#D4AF37" stroke-width="1.5">
-                    <path d="M100 40 C 70 40, 50 65, 50 95 C 50 125, 70 145, 100 145 C 130 145, 150 125, 150 95 C 150 65, 130 40, 100 40" stroke-opacity="0.8"/>
-                    <path d="M85 40 Q 100 20, 115 40" stroke-linecap="round"/>
-                    <path d="M80 95 Q 90 100, 100 95" stroke="none"/> <path d="M75 92 Q 85 98, 95 92" stroke-linecap="round"/> <path d="M105 92 Q 115 98, 125 92" stroke-linecap="round"/> <path d="M100 92 L 98 110 L 102 110" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M90 120 Q 100 125, 110 120" stroke-linecap="round"/>
-                    <circle cx="100" cy="80" r="2" fill="#5E0000" stroke="none"/>
-                    <path d="M50 145 Q 100 180, 150 145" stroke-dasharray="2,4" opacity="0.5"/>
-                </svg>
+                <img src="images/golden-buddha-statue-abstract-vector-600nw-2455237565-removebg-preview.png" alt="Lord Buddha">
             </div>
 
             <p class="top-blessing">WITH THE BLESSINGS OF LORD BUDDHA</p>
@@ -226,8 +229,9 @@
                 <span class="amp">&</span>
                 <div class="couple-names">Rutuja</div>
             </div>
+            
             <div class="marathi" style="color: var(--maroon); font-size: 1.2rem; margin-top: 5px;">
-                चि. अमर &nbsp;&nbsp;|&nbsp;&nbsp; सौ. कां. रुतुजा
+                चि. अमर   |   सौ. कां. रुतुजा
             </div>
 
             <div class="wedding-date">
@@ -250,7 +254,7 @@
                     <span class="marathi" style="color: var(--maroon);">(श्रीमती शोधा व श्री निवृत्ती रोकडे यांचे सुपुत्र)</span>
                 </p>
                 <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">
-                    Grandson of Mr. Amtaram Rokade & Mr. Kisan Dahane
+                    Grandson of Mr. Kisan Dahane & Mr. Amtaram Rokade 
                 </p>
             </div>
 
@@ -266,7 +270,7 @@
                     <span class="marathi" style="color: var(--maroon);">(श्रीमती प्रतिभा व श्री मनोहर टुपलोंढे यांची सुपुत्री)</span>
                 </p>
                 <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">
-                    Granddaughter of Mr. Govind Tuplondhe
+                    Granddaughter of Mr. NamDev Tuplondhe & Mr. Nandkishor Bagul
                 </p>
             </div>
         </section>
