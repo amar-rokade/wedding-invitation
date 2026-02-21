@@ -4,411 +4,777 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Amar & Rutuja | Royal Wedding</title>
-    
     <link rel="icon" type="image/png" href="https://amar-rokade.github.io/wedding-invitation/images/golden-buddha-statue-abstract-vector-600nw-2455237565-removebg-preview.png">
     <meta property="og:title" content="Amar & Rutuja | Royal Wedding Invitation">
     <meta property="og:description" content="14 & 15 March 2026 | Nashik. With the blessings of Lord Buddha.">
     <meta property="og:image" content="https://amar-rokade.github.io/wedding-invitation/images/golden-buddha-statue-abstract-vector-600nw-2455237565-removebg-preview.png">
     <meta property="og:type" content="website">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi:ital@0;1&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Great+Vibes&family=Cinzel:wght@400;600;800&family=Tiro+Devanagari+Marathi:ital@0;1&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+:root{--maroon:#3D0000;--mm:#5E0000;--gold:#C9A84C;--gb:#F0D080;--gp:#FFF5DC;--rose:#A0526F;}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--maroon);font-family:'Cormorant Garamond',serif;color:var(--gp);overflow-x:hidden;cursor:none}
 
-    <style>
-        :root {
-            --bg-cream: #FFF9F0;
-            --maroon: #5E0000;
-            --gold: #D4AF37;
-            --gold-light: #FEEC98;
-            --rose: #C27ba0;
-        }
+/* CURSOR */
+.cursor{width:12px;height:12px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);mix-blend-mode:difference}
+.cursor-ring{width:40px;height:40px;border:1px solid rgba(201,168,76,.6);border-radius:50%;position:fixed;pointer-events:none;z-index:99998;transform:translate(-50%,-50%)}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+/* PROGRESS */
+#progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(to right,var(--gold),var(--gb));z-index:1000;width:0;box-shadow:0 0 8px rgba(201,168,76,.5)}
 
-        body {
-            background-color: var(--bg-cream);
-            font-family: 'Montserrat', sans-serif;
-            color: var(--maroon);
-            overflow-x: hidden;
-        }
+/* MUSIC BTN */
+#music-btn{position:fixed;bottom:24px;right:24px;z-index:5000;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#3D0000,#1a0000);border:1px solid rgba(201,168,76,.4);color:var(--gold);font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4);transition:transform .3s;opacity:0;pointer-events:none}
+#music-btn.visible{opacity:1;pointer-events:all}
+#music-btn:hover{transform:scale(1.1)}
+#music-btn.playing{animation:musicPulse 2s ease-in-out infinite}
+@keyframes musicPulse{0%,100%{box-shadow:0 4px 20px rgba(0,0,0,.4),0 0 0 0 rgba(201,168,76,.3)}50%{box-shadow:0 4px 20px rgba(0,0,0,.4),0 0 0 10px rgba(201,168,76,0)}}
+.music-tip{position:fixed;bottom:84px;right:24px;z-index:5001;background:rgba(10,0,0,.95);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:2px;padding:6px 14px;border-radius:3px;opacity:0;transition:opacity .4s;pointer-events:none;white-space:nowrap}
+.music-tip.show{opacity:1}
 
-        /* --- MARATHI FONT STYLE --- */
-        .marathi {
-            font-family: 'Tiro Devanagari Marathi', serif;
-            font-weight: normal;
-        }
+/* GATE */
+#gate{position:fixed;inset:0;z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--maroon);overflow:hidden}
+#gate-left,#gate-right{position:absolute;top:0;width:50%;height:100%;background:linear-gradient(135deg,#3D0000,#1a0000);z-index:9001;transition:transform 1.6s cubic-bezier(.76,0,.24,1)}
+#gate-left{left:0}
+#gate-right{right:0}
+#gate.open #gate-left{transform:translateX(-100%)}
+#gate.open #gate-right{transform:translateX(100%)}
+.gpat{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(201,168,76,.05) 0,rgba(201,168,76,.05) 1px,transparent 1px,transparent 40px),repeating-linear-gradient(-45deg,rgba(201,168,76,.05) 0,rgba(201,168,76,.05) 1px,transparent 1px,transparent 40px)}
 
-        /* --- 1. LOADING SCREEN --- */
-        #loader {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--maroon);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: var(--gold);
-        }
-        .loader-logo { font-family: 'Great Vibes', cursive; font-size: 3rem; animation: pulse 1.5s infinite; }
+/* CANDLES */
+.candle-wrap{position:absolute;bottom:0;display:flex;align-items:flex-end;gap:14px;padding:0 24px 24px;z-index:9002}
+.candle-wrap.left{left:0}
+.candle-wrap.right{right:0}
+.candle{display:flex;flex-direction:column;align-items:center}
+.flame{width:10px;height:22px;background:radial-gradient(ellipse at 50% 80%,#fff 0%,#FFD700 30%,#FF6600 70%,transparent 100%);border-radius:50% 50% 30% 30%;animation:flicker 1.5s ease-in-out infinite;filter:blur(.5px);margin-bottom:-2px}
+.wax{background:linear-gradient(to right,#e8d5b0,#fff5dc,#c9b07a);border-radius:2px 2px 0 0}
+.wax.t{height:72px;width:14px}.wax.m{height:50px;width:14px}.wax.s{height:34px;width:14px}
+@keyframes flicker{0%,100%{transform:scaleX(1) rotate(-1deg);opacity:.95}25%{transform:scaleX(.85) scaleY(1.1) rotate(1deg);opacity:1}50%{transform:scaleX(1.1) scaleY(.9) rotate(-1deg);opacity:.9}75%{transform:scaleX(.9) rotate(1deg);opacity:1}}
 
-        /* --- 2. BACKGROUND CANVAS --- */
-        #bgCanvas {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
+.gate-center{position:relative;z-index:9003;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+.gborder{position:absolute;inset:20px;border:1px solid rgba(201,168,76,.2);pointer-events:none}
+.gborder::before,.gborder::after{content:'✦';position:absolute;color:var(--gold);font-size:1.2rem}
+.gborder::before{top:-10px;left:50%;transform:translateX(-50%)}
+.gborder::after{bottom:-10px;left:50%;transform:translateX(-50%)}
+#gpill{display:none;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);border-radius:50px;padding:8px 24px;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:3px;color:var(--gold);animation:fadeUp 1s ease .5s both}
+.gname{font-family:'Tiro Devanagari Marathi',serif;font-size:1.5rem;color:rgba(201,168,76,.6);animation:fadeUp 1s ease .2s both}
+.gtitle{font-family:'Great Vibes',cursive;font-size:clamp(3rem,8vw,5rem);background:linear-gradient(180deg,var(--gb),var(--gold),#8B6914);-webkit-background-clip:text;background-clip:text;color:transparent;animation:fadeUp 1s ease .4s both;filter:drop-shadow(0 0 30px rgba(201,168,76,.4))}
+.gsub{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:6px;color:rgba(201,168,76,.6);animation:fadeUp 1s ease .6s both}
+.gbtn{margin-top:30px;padding:16px 50px;background:transparent;border:1px solid var(--gold);color:var(--gold);font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:4px;cursor:pointer;position:relative;overflow:hidden;transition:color .4s;animation:fadeUp 1s ease .8s both}
+.gbtn::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.76,0,.24,1)}
+.gbtn:hover::before{transform:scaleX(1)}
+.gbtn:hover{color:var(--maroon)}
+.gbtn span{position:relative;z-index:1}
 
-        /* --- 3. SECTIONS --- */
-        .container { position: relative; z-index: 2; width: 100%; }
+/* CANVAS */
+#bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
 
-        section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-        }
+/* MAIN */
+.scroll-wrapper{position:relative;z-index:2;opacity:0;transition:opacity .5s}
+.scroll-wrapper.visible{opacity:1}
 
-        /* --- PHOTO FRAME (ARCH) --- */
-        .arch-frame {
-            width: 220px;
-            height: 260px;
-            border-radius: 110px 110px 0 0; 
-            border: 4px solid var(--gold);
-            padding: 0;
-            background: white;
-            box-shadow: 0 15px 35px rgba(94, 0, 0, 0.2);
-            position: relative;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            display: flex;
-            align-items: flex-end; /* Align image to bottom */
-            justify-content: center;
-            background: radial-gradient(circle, #fff, #fff5e6);
-        }
+section{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;position:relative;overflow:hidden}
 
-        .arch-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Ensures PNG transparency works best */
-            object-position: center bottom;
-            border-radius: 100px 100px 0 0;
-            filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.4)); /* Adds a slight golden shadow to the statue */
-        }
+/* HERO */
+.hero{background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(201,168,76,.07),transparent 70%)}
+.mandala{position:absolute;width:min(600px,100vw);height:min(600px,100vw);border-radius:50%;border:1px solid rgba(201,168,76,.08);top:50%;left:50%;transform:translate(-50%,-50%);animation:rotM 40s linear infinite}
+.mandala::before{content:'';position:absolute;inset:30px;border-radius:50%;border:1px solid rgba(201,168,76,.06);animation:rotM 25s linear infinite reverse}
+.mandala::after{content:'';position:absolute;inset:60px;border-radius:50%;border:1px dashed rgba(201,168,76,.06)}
+.orn{position:absolute;width:50px;height:50px;opacity:.4}
+.orn-tl{top:20px;left:20px;border-top:1px solid var(--gold);border-left:1px solid var(--gold)}
+.orn-tr{top:20px;right:20px;border-top:1px solid var(--gold);border-right:1px solid var(--gold)}
+.orn-bl{bottom:20px;left:20px;border-bottom:1px solid var(--gold);border-left:1px solid var(--gold)}
+.orn-br{bottom:20px;right:20px;border-bottom:1px solid var(--gold);border-right:1px solid var(--gold)}
 
-        /* --- TYPOGRAPHY --- */
-        .top-blessing {
-            font-family: 'Cinzel', serif;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            margin-bottom: 5px;
-            color: var(--gold);
-        }
+/* PHOTO ARCH */
+.arch-wrap{position:relative;width:200px;height:250px;margin-bottom:1.5rem}
+.arch-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.25),transparent 70%);animation:glow 3s ease-in-out infinite}
+.arch{width:100%;height:100%;border-radius:100px 100px 0 0;border:2px solid var(--gold);overflow:hidden;background:radial-gradient(circle at 50% 80%,rgba(201,168,76,.15),#1a0000);box-shadow:0 0 40px rgba(201,168,76,.2)}
+.arch img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.buddha-img{object-fit:contain!important;object-position:center bottom!important;filter:drop-shadow(0 0 15px rgba(201,168,76,.5))}
 
-        .marathi-blessing {
-            font-family: 'Tiro Devanagari Marathi', serif;
-            font-size: 1.8rem;
-            color: var(--maroon);
-            margin-bottom: 1.5rem;
-        }
+/* Photo tabs */
+.ptabs{display:none;gap:10px;margin-bottom:10px;justify-content:center}
+.ptabs.show{display:flex}
+.ptab{padding:5px 14px;border:1px solid rgba(201,168,76,.3);background:transparent;color:rgba(201,168,76,.6);font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:2px;cursor:pointer;transition:all .3s}
+.ptab.active{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.1)}
 
-        .couple-names {
-            font-family: 'Cinzel', serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin: 10px 0;
-            background: linear-gradient(to right, #8E6E26 0%, #FEEC98 50%, #8E6E26 100%);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: shine 4s linear infinite;
-        }
+.guest-greet{display:none;font-style:italic;font-size:1.2rem;color:rgba(201,168,76,.7);margin-bottom:5px;letter-spacing:2px}
+.bless{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:4px;color:rgba(201,168,76,.6);margin-bottom:5px}
+.mbless{font-family:'Tiro Devanagari Marathi',serif;font-size:1.6rem;color:rgba(201,168,76,.8);margin-bottom:1.5rem}
+.name-g{font-family:'Cinzel',serif;font-size:clamp(2.8rem,7vw,4.5rem);font-weight:800;background:linear-gradient(180deg,var(--gb),var(--gold),#8B6914);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;display:block}
+.amp{font-family:'Great Vibes',cursive;font-size:3rem;color:var(--gold);display:block;margin:5px 0;opacity:.7}
+.mnames{font-family:'Tiro Devanagari Marathi',serif;font-size:1.1rem;color:rgba(201,168,76,.55);margin-top:8px}
+.datebadge{display:inline-flex;align-items:center;gap:15px;margin-top:25px;padding:12px 30px;border:1px solid rgba(201,168,76,.3)}
+.datebadge::before,.datebadge::after{content:'⬥';color:var(--gold);opacity:.5}
+.datebadge-t{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:3px;color:var(--gold)}
+.loctag{margin-top:10px;font-size:.85rem;color:rgba(201,168,76,.5);letter-spacing:3px;font-family:'Cinzel',serif}
+.scrollcue{margin-top:50px;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.4;animation:bounce 2s ease-in-out infinite}
+.scrollcue span{font-size:.65rem;letter-spacing:3px;font-family:'Cinzel',serif}
+.scl{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent)}
 
-        .amp { font-family: 'Great Vibes', cursive; font-size: 2rem; color: var(--maroon); display: block; margin: 5px 0; }
+/* SECTION COMMON */
+.slabel{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:6px;color:rgba(201,168,76,.5);margin-bottom:8px}
+.stitle{font-family:'Great Vibes',cursive;font-size:clamp(2.5rem,6vw,3.5rem);color:var(--gold);margin-bottom:8px}
+.stitle-m{font-family:'Tiro Devanagari Marathi',serif;font-size:1.4rem;color:rgba(201,168,76,.5);margin-bottom:40px}
+.divrow{display:flex;align-items:center;gap:15px;width:100%;max-width:400px;margin:0 auto 40px}
+.divl{flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,.4),transparent)}
+.divs{color:var(--gold);font-size:1.2rem;opacity:.6}
 
-        .wedding-date {
-            border-top: 1px solid var(--gold);
-            border-bottom: 1px solid var(--gold);
-            padding: 10px 20px;
-            margin-top: 20px;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
+/* COUNTDOWN */
+.cds{background:radial-gradient(ellipse at 50% 50%,rgba(201,168,76,.06),transparent 70%)}
+.cdgrid{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:30px 0}
+.cdu{display:flex;flex-direction:column;align-items:center;gap:5px}
+.cdn{font-family:'Cinzel',serif;font-size:clamp(2.5rem,8vw,4rem);font-weight:800;background:linear-gradient(180deg,var(--gb),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;width:80px;text-align:center;line-height:1}
+.cdl{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:3px;color:rgba(201,168,76,.4)}
+.cdsep{font-size:2rem;color:rgba(201,168,76,.3);line-height:80px}
 
-        /* --- CARDS --- */
-        .royal-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 20px;
-            padding: 2.5rem 2rem;
-            width: 100%;
-            max-width: 500px;
-            margin: 20px auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transform: translateY(50px);
-            opacity: 0;
-        }
+/* FAMILY */
+.fams{background:linear-gradient(180deg,#3D0000,#1a0000 50%,#3D0000)}
+.famgrid{display:grid;grid-template-columns:1fr;gap:24px;width:100%;max-width:560px}
+.famc{background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.2);border-radius:3px;padding:2rem 1.8rem;position:relative;overflow:hidden;opacity:0;transform:translateY(40px)}
+.famc::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.fami{width:50px;height:50px;border:1px solid rgba(201,168,76,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1rem;background:rgba(201,168,76,.05)}
+.famn{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:600;color:var(--gb);margin-bottom:4px}
+.famnm{font-family:'Tiro Devanagari Marathi',serif;font-size:1rem;color:rgba(201,168,76,.45);margin-bottom:15px}
+.famdiv{width:100%;height:1px;background:rgba(201,168,76,.12);margin:15px 0}
+.famp{font-size:1.05rem;line-height:1.7;color:rgba(255,235,210,.75)}
+.famp strong{color:var(--gp)}
+.fampm{font-family:'Tiro Devanagari Marathi',serif;font-size:.95rem;color:rgba(201,168,76,.4);margin-top:5px;line-height:1.7}
+.famg{font-size:.85rem;color:rgba(255,235,210,.4);margin-top:10px;font-style:italic}
 
-        .card-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
-        
-        .timeline-item {
-            text-align: left;
-            padding-left: 20px;
-            border-left: 2px solid var(--gold);
-            margin-bottom: 30px;
-            position: relative;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -6px; top: 0;
-            width: 10px; height: 10px;
-            background: var(--maroon);
-            border-radius: 50%;
-        }
+/* EVENTS */
+.evs{background:radial-gradient(ellipse at 30% 50%,rgba(162,82,111,.08),transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(201,168,76,.05),transparent 60%)}
+.tl{width:100%;max-width:560px;position:relative;padding-left:24px}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(201,168,76,.3) 20%,rgba(201,168,76,.3) 80%,transparent)}
+.evc{position:relative;margin-bottom:40px;opacity:0;transform:translateX(-30px)}
+.evc::before{content:'';position:absolute;left:-29px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px rgba(201,168,76,.5)}
+.evtag{display:inline-block;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:3px;padding:4px 12px;border:1px solid rgba(201,168,76,.3);color:var(--gold);margin-bottom:10px}
+.evname{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gp);line-height:1.1}
+.evnm{font-family:'Tiro Devanagari Marathi',serif;font-size:1.1rem;color:rgba(201,168,76,.5);margin:3px 0}
+.evtime{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:2px;color:rgba(201,168,76,.6);margin-top:5px}
+.evc.wed .evname{font-size:2.2rem;background:linear-gradient(135deg,var(--gb),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.evc.wed::before{width:14px;height:14px;left:-31px;top:6px;background:linear-gradient(135deg,var(--gb),var(--gold))}
 
-        .btn-gold {
-            background: linear-gradient(45deg, var(--maroon), #2b0000);
-            color: var(--gold);
-            padding: 15px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-family: 'Cinzel', serif;
-            letter-spacing: 1px;
-            display: inline-block;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(94, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
+/* VENUE */
+.vens{background:linear-gradient(180deg,#1a0000,#2d0000 50%,#1a0000)}
+.venc{width:100%;max-width:500px;border:1px solid rgba(201,168,76,.2);overflow:hidden;opacity:0;transform:translateY(40px)}
+.ventop{background:rgba(201,168,76,.05);padding:2.5rem 2rem;text-align:center;border-bottom:1px solid rgba(201,168,76,.15)}
+.venicon{font-size:2rem;color:var(--gold);display:block;margin-bottom:15px}
+.venname{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:600;color:var(--gp);margin-bottom:5px}
+.vennm{font-family:'Tiro Devanagari Marathi',serif;font-size:1rem;color:rgba(201,168,76,.5)}
+.venadr{padding:1.5rem 2rem;text-align:center}
+.venadr p{font-size:1rem;line-height:1.8;color:rgba(255,235,210,.6)}
+.venmap{width:100%;height:220px;border:none;border-top:1px solid rgba(201,168,76,.15);filter:grayscale(30%) sepia(20%)}
+.btnrow{display:flex;gap:0;width:100%;border-top:1px solid rgba(201,168,76,.15)}
+.vbtn{flex:1;padding:16px 8px;background:linear-gradient(135deg,var(--mm),var(--maroon));border:none;border-right:1px solid rgba(201,168,76,.15);color:var(--gold);font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:2px;text-decoration:none;text-align:center;cursor:pointer;position:relative;overflow:hidden;transition:background .3s;display:flex;align-items:center;justify-content:center;gap:5px}
+.vbtn:last-child{border-right:none}
+.vbtn::before{content:'';position:absolute;inset:0;background:rgba(201,168,76,.1);opacity:0;transition:opacity .3s}
+.vbtn:hover::before{opacity:1}
 
-        .btn-gold:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(94, 0, 0, 0.4);
-        }
+/* ACTIONS */
+.acts{background:radial-gradient(ellipse at 50% 30%,rgba(162,82,111,.1),transparent 60%)}
+.actgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;max-width:500px;margin-top:10px}
+.acta{border:1px solid rgba(201,168,76,.2);padding:1.5rem 1rem;text-align:center;cursor:pointer;position:relative;overflow:hidden;background:rgba(255,255,255,.02);transition:border-color .3s;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;transform:translateY(30px)}
+.acta:hover{border-color:rgba(201,168,76,.5)}
+.acta::before{content:'';position:absolute;inset:0;background:rgba(201,168,76,.05);opacity:0;transition:opacity .3s}
+.acta:hover::before{opacity:1}
+.acta.full{grid-column:1/-1}
+.acticon{font-size:1.8rem}
+.actlbl{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:3px;color:var(--gold);line-height:1.5}
+.actsub{font-size:.85rem;color:rgba(201,168,76,.45)}
 
-        @keyframes shine { to { background-position: 200% center; } }
-        @keyframes pulse { 0% { opacity: 0.6; transform: scale(0.95); } 50% { opacity: 1; transform: scale(1); } 100% { opacity: 0.6; transform: scale(0.95); } }
+/* MODAL BASE */
+.modal{position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.8);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.mbox{background:linear-gradient(135deg,#3D0000,#1a0000);border:1px solid rgba(201,168,76,.3);padding:2rem;width:100%;max-width:420px;position:relative;animation:fadeUp .4s ease;max-height:90vh;overflow-y:auto}
+.mtitle{font-family:'Cinzel',serif;color:var(--gold);font-size:1rem;letter-spacing:3px;margin-bottom:20px}
+.mclose{position:absolute;top:15px;right:18px;background:none;border:none;color:rgba(201,168,76,.5);font-size:1.2rem;cursor:pointer}
+.minput{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.3);color:var(--gp);font-family:'Cormorant Garamond',serif;font-size:1.1rem;padding:12px 15px;margin-bottom:12px;outline:none;transition:border-color .3s;border-radius:0}
+.minput:focus{border-color:var(--gold)}
+.minput::placeholder{color:rgba(201,168,76,.3)}
+.mpreview{background:rgba(0,0,0,.3);border:1px solid rgba(201,168,76,.15);padding:10px 14px;font-size:.75rem;color:rgba(201,168,76,.5);word-break:break-all;margin-bottom:15px;min-height:40px;font-family:'Cinzel',serif;letter-spacing:1px}
+.mbtnrow{display:flex;gap:10px}
+.mbtn{flex:1;padding:14px;background:transparent;border:1px solid rgba(201,168,76,.4);color:var(--gold);font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:2px;cursor:pointer;transition:all .3s;border-radius:0}
+.mbtn.pri{background:rgba(201,168,76,.15)}
+.mbtn:hover{background:rgba(201,168,76,.2)}
 
-    </style>
+/* RSVP */
+.rtitle{font-family:'Great Vibes',cursive;color:var(--gold);font-size:2rem;margin-bottom:5px}
+.rsub{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:3px;color:rgba(201,168,76,.5);margin-bottom:25px}
+.ropts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:15px}
+.ropt{border:1px solid rgba(201,168,76,.25);padding:15px 10px;text-align:center;cursor:pointer;transition:all .3s;background:transparent;font-family:inherit}
+.ropt:hover,.ropt.sel{border-color:var(--gold);background:rgba(201,168,76,.1)}
+.roi{font-size:1.5rem;display:block;margin-bottom:5px}
+.rol{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:2px;color:var(--gold)}
+.rsend{width:100%;padding:15px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.4);color:var(--gold);font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:3px;cursor:pointer;transition:all .3s;margin-top:10px}
+.rsend:hover{background:rgba(201,168,76,.2)}
+
+/* FOOTER */
+.footer{min-height:50vh;background:#0d0000;text-align:center;padding:80px 24px 50px;justify-content:flex-start}
+.flogo{font-family:'Great Vibes',cursive;font-size:3rem;color:var(--gold);opacity:.8;margin-bottom:15px}
+.fsub{font-size:.75rem;letter-spacing:3px;color:rgba(201,168,76,.3);font-family:'Cinzel',serif}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes glow{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+@keyframes rotM{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+@media(max-width:480px){
+    .name-g{font-size:2.5rem}
+    .cdn{width:60px;font-size:2rem}
+    .cdsep{font-size:1.5rem;line-height:60px}
+    .actgrid{grid-template-columns:1fr}
+    .acta.full{grid-column:auto}
+    body{cursor:auto}
+    .cursor,.cursor-ring{display:none}
+}
+.marathi{font-family:'Tiro Devanagari Marathi',serif}
+</style>
 </head>
 <body>
 
-    <div id="loader">
-        <div class="loader-logo">A & R</div>
-        <div style="font-family: 'Cinzel'; font-size: 0.8rem; margin-top: 10px; letter-spacing: 2px;">OPENING INVITATION...</div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div id="progress"></div>
+
+<!-- MUSIC BTN -->
+<button id="music-btn" title="Toggle Music">🎵</button>
+<div class="music-tip" id="music-tip">🎵 TAP FOR MUSIC</div>
+
+<!-- WA MODAL -->
+<div class="modal" id="wa-modal">
+    <div class="mbox">
+        <button class="mclose" onclick="closeWA()">✕</button>
+        <div class="mtitle">📲 SHARE PERSONALIZED INVITE</div>
+        <p style="font-size:.9rem;color:rgba(255,235,210,.6);margin-bottom:15px;line-height:1.6">Enter guest name to create their personal invitation link — they'll be welcomed by name!</p>
+        <input class="minput" id="wa-name" type="text" placeholder="Guest Name (e.g. Rahul Sharma)" oninput="updateWAPreview()">
+        <div class="mpreview" id="wa-prev">Enter a name above to preview the link...</div>
+        <div class="mbtnrow">
+            <button class="mbtn" onclick="copyWALink()">📋 COPY LINK</button>
+            <button class="mbtn pri" onclick="sendWA()">💬 WHATSAPP</button>
+        </div>
     </div>
+</div>
 
-    <canvas id="bgCanvas"></canvas>
-
-    <div class="container">
-        
-        <section class="hero">
-            <div class="arch-frame" id="buddhaFrame">
-                <img src="https://amar-rokade.github.io/wedding-invitation/images/golden-buddha-statue-abstract-vector-600nw-2455237565-removebg-preview.png" alt="Lord Buddha">
-            </div>
-
-            <p class="top-blessing">WITH THE BLESSINGS OF LORD BUDDHA</p>
-            <p class="marathi-blessing">श्री बुद्धांच्या कृपेने</p>
-
-            <div style="margin-top: 10px;">
-                <div class="couple-names">Amar</div>
-                <span class="amp">&</span>
-                <div class="couple-names">Rutuja</div>
-            </div>
-            
-            <div class="marathi" style="color: var(--maroon); font-size: 1.2rem; margin-top: 5px;">
-                चि. अमर   |   सौ. कां. रुतुजा
-            </div>
-
-            <div class="wedding-date">
-                14 • 15 MARCH 2026
-            </div>
-            
-            <p style="font-size: 0.9rem; margin-top: 10px; color: #666; font-weight: 500;">NASHIK • नाशिक</p>
-        </section>
-
-        <section>
-            <div class="royal-card">
-                <span class="card-icon">🤵</span>
-                <h2 style="font-family: 'Cinzel'; color: var(--maroon);">Amar Rokade</h2>
-                <p class="marathi" style="color: #888; margin-top:5px;">(चि. अमर)</p>
-                
-                <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
-                
-                <p style="font-size: 0.9rem; line-height: 1.8;">
-                    Son of <strong>Mrs. Shobha & Mr. Nivrutti Rokade</strong><br>
-                    <span class="marathi" style="color: var(--maroon);">(श्रीमती शोभा व श्री निवृत्ती रोकडे यांचे सुपुत्र)</span>
-                </p>
-                <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">
-                    Grandson of Mr. Kisan Dahane & Mr. Aatmaram Rokade 
-                </p>
-            </div>
-
-            <div class="royal-card">
-                <span class="card-icon">👰</span>
-                <h2 style="font-family: 'Cinzel'; color: var(--maroon);">Rutuja Tuplondhe</h2>
-                <p class="marathi" style="color: #888; margin-top:5px;">(सौ. कां. रुतुजा)</p>
-                
-                <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
-                
-                <p style="font-size: 0.9rem; line-height: 1.8;">
-                    Daughter of <strong>Mrs. Pratibha & Mr. Manohar Tuplondhe</strong><br>
-                    <span class="marathi" style="color: var(--maroon);">(श्रीमती प्रतिभा व श्री मनोहर तुपलोंढे यांची सुपुत्री)</span>
-                </p>
-                <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">
-                    Granddaughter of Mr. Namdev Tuplondhe & Mr. Nandkishor Bagul
-                </p>
-            </div>
-        </section>
-
-        <section>
-            <h2 style="font-family: 'Cinzel'; font-size: 2rem; margin-bottom: 2rem; color: var(--maroon);">The Celebration</h2>
-            
-            <div class="royal-card">
-                <div class="timeline-item">
-                    <span style="background: var(--gold-light); padding: 2px 8px; font-size: 0.7rem; font-weight: bold; border-radius: 4px;">14 MARCH</span>
-                    <h3 style="margin-top: 5px; color: var(--maroon);">Engagement</h3>
-                    <p class="marathi" style="color: var(--gold); font-size: 1.1rem; margin-bottom: 5px;">साखरपुडा समारंभ</p>
-                    <p style="color: #555;">11:00 AM</p>
-                </div>
-
-                <div class="timeline-item">
-                    <span style="background: var(--gold-light); padding: 2px 8px; font-size: 0.7rem; font-weight: bold; border-radius: 4px;">14 MARCH</span>
-                    <h3 style="margin-top: 5px; color: var(--maroon);">Haldi Ceremony</h3>
-                    <p class="marathi" style="color: var(--gold); font-size: 1.1rem; margin-bottom: 5px;">हळद समारंभ</p>
-                    <p style="color: #555;">05:00 PM</p>
-                </div>
-
-                <div class="timeline-item" style="border-left: 2px solid var(--maroon);">
-                    <span style="background: var(--maroon); color: white; padding: 2px 8px; font-size: 0.7rem; font-weight: bold; border-radius: 4px;">15 MARCH</span>
-                    <h3 style="margin-top: 5px; color: var(--maroon); font-size: 1.4rem;">The Wedding</h3>
-                    <p class="marathi" style="color: var(--gold); font-size: 1.3rem; margin-bottom: 5px;">शुभ विवाह सोहळा</p>
-                    <p style="color: #555;">Time: 11:00 AM</p>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div class="royal-card" style="text-align: center;">
-                <h2 style="font-family: 'Cinzel'; margin-bottom: 10px;">Venue</h2>
-                <p class="marathi" style="font-size: 1.2rem; color: var(--gold); margin-bottom: 15px;">विवाह स्थळ</p>
-                
-                <div style="font-size: 2rem; color: var(--gold);">⚜</div>
-                
-                <p style="font-size: 1.2rem; font-weight: bold; margin: 15px 0 5px;">Chaitanya Farm Agro Resort</p>
-                <p class="marathi" style="font-size: 1.1rem; color: var(--maroon);">चैतन्य फार्म अग्रो रिसॉर्ट</p>
-                
-                <p style="line-height: 1.6; font-size: 0.9rem; color: #555; margin-top: 15px;">
-                    Besides York Wines, Sula Wine Road,<br>
-                    Gangavhare, Nashik
-                </p>
-                
-                <a href="https://maps.app.goo.gl/sSTwYvjUf6juLadR8" target="_blank" class="btn-gold">Navigate 📍</a>
-            </div>
-
-            <footer style="margin-top: 30px; opacity: 0.6; font-size: 0.8rem;">
-                Created with Love for Amar & Rutuja
-            </footer>
-        </section>
-
+<!-- RSVP MODAL -->
+<div class="modal" id="rsvp-modal">
+    <div class="mbox">
+        <button class="mclose" onclick="closeRSVP()">✕</button>
+        <div class="rtitle">RSVP</div>
+        <div class="rsub">WILL YOU JOIN US?</div>
+        <div class="ropts">
+            <button class="ropt" onclick="selRSVP(this,'yes')"><span class="roi">🎉</span><span class="rol">YES, I'LL BE THERE!</span></button>
+            <button class="ropt" onclick="selRSVP(this,'no')"><span class="roi">💌</span><span class="rol">SORRY, CANNOT MAKE IT</span></button>
+        </div>
+        <input class="minput" id="rsvp-name" type="text" placeholder="Your Full Name" style="margin-bottom:10px">
+        <input class="minput" id="rsvp-g" type="number" placeholder="Total guests (including yourself)" min="1" max="10" style="margin-bottom:10px">
+        <button class="rsend" onclick="sendRSVP()">💬 SEND VIA WHATSAPP</button>
     </div>
+</div>
 
-    <script>
-        // --- 1. LOADER & HERO ENTRANCE ---
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            gsap.to(loader, {
-                opacity: 0,
-                duration: 1,
-                delay: 1.5,
-                onComplete: () => loader.style.display = 'none'
-            });
-            
-            gsap.from("#buddhaFrame", { scale: 0.8, opacity: 0, duration: 1.5, delay: 1.6, ease: "back.out(1.7)" });
-            gsap.from(".couple-names", { y: 20, opacity: 0, duration: 1, delay: 1.8, stagger: 0.2 });
-        });
+<!-- GATE -->
+<div id="gate">
+    <div id="gate-left">
+        <div class="gpat"></div>
+        <div class="candle-wrap left">
+            <div class="candle"><div class="flame" style="animation-delay:.3s"></div><div class="wax s"></div></div>
+            <div class="candle"><div class="flame" style="animation-delay:.7s"></div><div class="wax t"></div></div>
+            <div class="candle"><div class="flame" style="animation-delay:.1s"></div><div class="wax m"></div></div>
+        </div>
+    </div>
+    <div id="gate-right">
+        <div class="gpat"></div>
+        <div class="candle-wrap right">
+            <div class="candle"><div class="flame" style="animation-delay:.5s"></div><div class="wax m"></div></div>
+            <div class="candle"><div class="flame" style="animation-delay:.2s"></div><div class="wax t"></div></div>
+            <div class="candle"><div class="flame" style="animation-delay:.9s"></div><div class="wax s"></div></div>
+        </div>
+    </div>
+    <div class="gate-center">
+        <div class="gborder"></div>
+        <div class="gname">नमस्कार 🙏</div>
+        <div id="gpill"></div>
+        <div class="gtitle">Amar &amp; Rutuja</div>
+        <div class="gsub">ROYAL WEDDING INVITATION</div>
+        <button class="gbtn" onclick="openGate()"><span>✦ OPEN INVITATION ✦</span></button>
+    </div>
+</div>
 
-        // --- 2. FALLING PETALS ANIMATION ---
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        let width, height;
-        let petals = [];
-        const colors = ['#5E0000', '#D4AF37', '#C27ba0']; // Maroon, Gold, Rose
+<canvas id="bgCanvas"></canvas>
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+<div class="scroll-wrapper" id="main">
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="mandala"></div>
+        <div class="orn orn-tl"></div><div class="orn orn-tr"></div>
+        <div class="orn orn-bl"></div><div class="orn orn-br"></div>
+
+        <div class="arch-wrap">
+            <div class="arch-glow"></div>
+            <div class="arch" id="archFrame">
+                <!--
+                  TO ADD COUPLE PHOTO:
+                  Upload photo to your GitHub repo, e.g. images/couple.jpg
+                  Then change coupleImg src to that URL and it will auto-show.
+                -->
+                <img id="coupleImg"
+                    src="https://amar-rokade.github.io/wedding-invitation/images/couple.jpg"
+                    alt="Amar & Rutuja"
+                    style="display:none"
+                    onerror="this.style.display='none';document.getElementById('buddhaImg').style.display='block';document.getElementById('ptabs').style.display='none'">
+                <img id="buddhaImg" class="buddha-img"
+                    src="https://amar-rokade.github.io/wedding-invitation/images/golden-buddha-statue-abstract-vector-600nw-2455237565-removebg-preview.png"
+                    alt="Lord Buddha">
+            </div>
+        </div>
+
+        <div class="ptabs" id="ptabs">
+            <button class="ptab active" onclick="showImg('buddha',this)">🙏 Buddha</button>
+            <button class="ptab" onclick="showImg('couple',this)">💑 Us</button>
+        </div>
+
+        <div class="guest-greet" id="ggreet"></div>
+        <div class="bless">WITH THE BLESSINGS OF LORD BUDDHA</div>
+        <div class="mbless">श्री बुद्धांच्या कृपेने</div>
+        <span class="name-g">Amar</span>
+        <span class="amp">&amp;</span>
+        <span class="name-g">Rutuja</span>
+        <div class="mnames">चि. अमर &nbsp;|&nbsp; सौ. कां. रुतुजा</div>
+        <div class="datebadge"><span class="datebadge-t">14 · 15 MARCH 2026</span></div>
+        <div class="loctag">NASHIK · नाशिक</div>
+        <div class="scrollcue"><span>SCROLL</span><div class="scl"></div></div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section class="cds">
+        <div class="slabel">TIME REMAINING</div>
+        <div class="stitle">The Big Day</div>
+        <div class="stitle-m">विवाह मुहूर्त</div>
+        <div class="cdgrid">
+            <div class="cdu"><div class="cdn" id="cd-d">00</div><div class="cdl">DAYS</div></div>
+            <div class="cdsep">:</div>
+            <div class="cdu"><div class="cdn" id="cd-h">00</div><div class="cdl">HOURS</div></div>
+            <div class="cdsep">:</div>
+            <div class="cdu"><div class="cdn" id="cd-m">00</div><div class="cdl">MINUTES</div></div>
+            <div class="cdsep">:</div>
+            <div class="cdu"><div class="cdn" id="cd-s">00</div><div class="cdl">SECONDS</div></div>
+        </div>
+        <div class="divrow"><div class="divl"></div><div class="divs">❋</div><div class="divl"></div></div>
+    </section>
+
+    <!-- FAMILY -->
+    <section class="fams">
+        <div class="slabel">THE FAMILIES</div>
+        <div class="stitle">With Love From</div>
+        <div class="stitle-m">कुटुंब परिचय</div>
+        <div class="famgrid">
+            <div class="famc" data-animate="slide-up">
+                <div class="fami">🤵</div>
+                <div class="famn">Amar Rokade</div>
+                <div class="famnm">चि. अमर रोकडे</div>
+                <div class="famdiv"></div>
+                <div class="famp">Son of <strong>Mrs. Shobha &amp; Mr. Nivrutti Rokade</strong>
+                    <div class="fampm">श्रीमती शोभा व श्री निवृत्ती रोकडे यांचे सुपुत्र</div>
+                </div>
+                <div class="famg">Grandson of Mr. Kisan Dahane &amp; Mr. Aatmaram Rokade</div>
+            </div>
+            <div class="famc" data-animate="slide-up" style="transition-delay:.15s">
+                <div class="fami">👰</div>
+                <div class="famn">Rutuja Tuplondhe</div>
+                <div class="famnm">सौ. कां. रुतुजा तुपलोंढे</div>
+                <div class="famdiv"></div>
+                <div class="famp">Daughter of <strong>Mrs. Pratibha &amp; Mr. Manohar Tuplondhe</strong>
+                    <div class="fampm">श्रीमती प्रतिभा व श्री मनोहर तुपलोंढे यांची सुपुत्री</div>
+                </div>
+                <div class="famg">Granddaughter of Mr. Namdev Tuplondhe &amp; Mr. Nandkishor Bagul</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EVENTS -->
+    <section class="evs">
+        <div class="slabel">THE CELEBRATION</div>
+        <div class="stitle">Events</div>
+        <div class="stitle-m">सोहळे</div>
+        <div class="tl">
+            <div class="evc" data-animate="slide-right">
+                <div class="evtag">14 MARCH 2026</div>
+                <div class="evname">Haldi Ceremony</div>
+                <div class="evnm">हळद समारंभ</div>
+                <div class="evtime">⏱ 05:00 PM</div>
+            </div>
+            <div class="evc" data-animate="slide-right" style="transition-delay:.15s">
+                <div class="evtag">15 MARCH 2026</div>
+                <div class="evname">Engagement</div>
+                <div class="evnm">साखरपुडा समारंभ</div>
+                <div class="evtime">⏱ 11:00 AM</div>
+            </div>
+            <div class="evc wed" data-animate="slide-right" style="transition-delay:.3s">
+                <div class="evtag" style="border-color:rgba(201,168,76,.5);color:var(--gb)">15 MARCH 2026 · MAIN EVENT</div>
+                <div class="evname">The Wedding</div>
+                <div class="evnm" style="color:rgba(201,168,76,.65)">शुभ विवाह सोहळा</div>
+                <div class="evtime" style="color:rgba(201,168,76,.8)">⏱ 06:30 PM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VENUE -->
+    <section class="vens">
+        <div class="slabel">JOIN US AT</div>
+        <div class="stitle">The Venue</div>
+        <div class="stitle-m">विवाह स्थळ</div>
+        <div class="venc" data-animate="fade-up">
+            <div class="ventop">
+                <span class="venicon">⚜</span>
+                <div class="venname">Hotel Blue Ocean Resort</div>
+                <div class="vennm">हॉटेल ब्लू ओशन रिसॉर्ट</div>
+            </div>
+            <div class="venadr"><p>Major Nanaji Jadhav Farm,<br>YCMOU Road, Govardhan,<br>Nashik, Maharashtra 422222</p></div>
+            <iframe class="venmap"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3748.089485!2d73.8!3d20.02!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bddebb072af745f%3A0x8de4fb1b2da6fafd!2sBlue%20Ocean%20Resort!5e0!3m2!1sen!2sin!4v1700000000"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Venue Map">
+            </iframe>
+            <div class="btnrow">
+                <a href="https://maps.app.goo.gl/xk7UpuhdJDm7WvgeA" target="_blank" class="vbtn">📍 NAVIGATE</a>
+                <button class="vbtn" onclick="addCal()">📅 ADD TO CALENDAR</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACTIONS -->
+    <section class="acts">
+        <div class="slabel">CONNECT WITH US</div>
+        <div class="stitle">Join the Joy</div>
+        <div class="stitle-m">सहभागी व्हा</div>
+        <div class="actgrid">
+            <div class="acta" data-animate="fade-up" onclick="openWA()">
+                <div class="acticon">📲</div>
+                <div class="actlbl">SHARE INVITE</div>
+                <div class="actsub">Personalized link per guest</div>
+            </div>
+            <div class="acta" data-animate="fade-up" style="transition-delay:.1s" onclick="openRSVP()">
+                <div class="acticon">💌</div>
+                <div class="actlbl">RSVP NOW</div>
+                <div class="actsub">Let us know you're coming</div>
+            </div>
+            <div class="acta" data-animate="fade-up" style="transition-delay:.2s" onclick="addCal()">
+                <div class="acticon">📅</div>
+                <div class="actlbl">ADD TO CALENDAR</div>
+                <div class="actsub">Save 14 &amp; 15 March 2026</div>
+            </div>
+            <div class="acta" data-animate="fade-up" style="transition-delay:.3s" onclick="dlSaveDate()">
+                <div class="acticon">🖼️</div>
+                <div class="actlbl">SAVE THE DATE</div>
+                <div class="actsub">Download card</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <section class="footer">
+        <div class="flogo">Amar &amp; Rutuja</div>
+        <div class="divrow" style="margin:20px auto"><div class="divl"></div><div class="divs">✦</div><div class="divl"></div></div>
+        <div class="fsub">14 · 15 MARCH 2026 · NASHIK</div>
+        <div style="margin-top:30px;font-style:italic;font-size:1.1rem;color:rgba(201,168,76,.35)">"Two souls, one journey, with the blessings of Lord Buddha"</div>
+        <div style="margin-top:10px;font-family:'Tiro Devanagari Marathi',serif;font-size:1rem;color:rgba(201,168,76,.25)">बुद्धं शरणं गच्छामि</div>
+        <div style="margin-top:40px;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:2px;color:rgba(201,168,76,.2)">CRAFTED WITH ♥ FOR AMAR &amp; RUTUJA</div>
+    </section>
+</div>
+
+<script>
+/* ===== PERSONALIZATION ===== */
+function getGuest(){
+    const p=new URLSearchParams(window.location.search);
+    const raw=p.get('guest')||p.get('to')||p.get('name')||'';
+    if(!raw) return null;
+    return raw.replace(/\+/g,' ').replace(/-/g,' ').split(' ')
+        .map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(' ');
+}
+const GUEST=getGuest();
+if(GUEST){
+    const pill=document.getElementById('gpill');
+    pill.style.display='block'; pill.textContent='DEAR '+GUEST.toUpperCase();
+    const greet=document.getElementById('ggreet');
+    greet.style.display='block'; greet.textContent='Dear '+GUEST+',';
+    document.title='For '+GUEST+' | Amar & Rutuja Wedding';
+}
+
+/* ===== COUPLE PHOTO ===== */
+function showImg(t,btn){
+    document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    if(t==='couple'){document.getElementById('coupleImg').style.display='block';document.getElementById('buddhaImg').style.display='none';}
+    else{document.getElementById('coupleImg').style.display='none';document.getElementById('buddhaImg').style.display='block';}
+}
+window.addEventListener('load',()=>{
+    const ci=document.getElementById('coupleImg');
+    const ti=new Image();
+    ti.onload=()=>{ci.style.display='block';document.getElementById('buddhaImg').style.display='none';document.getElementById('ptabs').classList.add('show');};
+    ti.src=ci.src;
+});
+
+/* ===== GATE ===== */
+function openGate(){
+    playChime();
+    document.getElementById('gate').classList.add('open');
+    setTimeout(()=>{
+        document.getElementById('gate').style.display='none';
+        document.getElementById('main').classList.add('visible');
+        const mb=document.getElementById('music-btn');
+        mb.classList.add('visible');
+        window.scrollTo(0,0);
+        startHero();
+        const tip=document.getElementById('music-tip');
+        tip.classList.add('show');
+        setTimeout(()=>tip.classList.remove('show'),3500);
+    },1700);
+}
+
+/* ===== AUDIO CTX ===== */
+let AC=null;
+function getAC(){if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();return AC;}
+
+/* ===== CHIME ===== */
+function playChime(){
+    try{
+        const c=getAC();
+        if(c.state==='suspended')c.resume();
+        function t(f,s,d,v){
+            const o=c.createOscillator(),g=c.createGain();
+            o.connect(g);g.connect(c.destination);o.type='sine';o.frequency.value=f;
+            g.gain.setValueAtTime(0,c.currentTime+s);
+            g.gain.linearRampToValueAtTime(v,c.currentTime+s+.05);
+            g.gain.exponentialRampToValueAtTime(.001,c.currentTime+s+d);
+            o.start(c.currentTime+s);o.stop(c.currentTime+s+d+.1);
         }
-        window.addEventListener('resize', resize);
-        resize();
+        t(523.25,0,1,.10);t(659.25,.2,.9,.09);t(783.99,.4,.8,.08);t(1046.5,.65,1.2,.07);t(880,.95,.7,.06);t(1174.7,1.3,1,.05);
+    }catch(e){}
+}
 
-        class Petal {
-            constructor() {
-                this.reset();
-                this.y = Math.random() * height; 
-            }
-            reset() {
-                this.x = Math.random() * width;
-                this.y = -20;
-                this.size = Math.random() * 8 + 5; 
-                this.speedY = Math.random() * 1 + 0.5;
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.angle = Math.random() * Math.PI * 2;
-                this.spin = Math.random() * 0.02 - 0.01;
-                this.sway = Math.random() * 0.5;
-            }
-            update() {
-                this.y += this.speedY;
-                this.x += Math.sin(this.angle) * this.sway;
-                this.angle += this.spin;
-                if(this.y > height) this.reset();
-            }
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.angle);
-                ctx.fillStyle = this.color;
-                ctx.globalAlpha = 0.6; 
-                ctx.beginPath();
-                ctx.ellipse(0, 0, this.size, this.size/2, 0, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
+/* ===== MUSIC ===== */
+let mPlaying=false, mNodes=[], mRAF=null, mStep=0, mNext=0;
+const SCALE=[293.66,329.63,369.99,440,493.88,587.33,659.25,739.99,880];
+const MEL=[4,2,4,5,6,5,4,2,0,2,4,2,1,0,2,4,6,5,4,6];
+
+document.getElementById('music-btn').addEventListener('click',()=>{ mPlaying?stopM():startM(); });
+
+function pNote(f,s,d,v=.07,tp='sine'){
+    const c=getAC();
+    const o=c.createOscillator(),g=c.createGain();
+    o.connect(g);g.connect(c.destination);o.type=tp;o.frequency.value=f;
+    g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(v,s+.05);
+    g.gain.exponentialRampToValueAtTime(.0001,s+d);
+    o.start(s);o.stop(s+d+.1);mNodes.push(o);
+}
+
+function startM(){
+    mPlaying=true;
+    const mb=document.getElementById('music-btn');
+    mb.textContent='🎶';mb.classList.add('playing');
+    const c=getAC();
+    if(c.state==='suspended')c.resume();
+    mNext=c.currentTime+.1;
+    (function loop(){
+        if(!mPlaying)return;
+        const now=getAC().currentTime;
+        while(mNext<now+.35){
+            const idx=MEL[mStep%MEL.length];
+            pNote(SCALE[idx],mNext,.55,.07,'sine');
+            if(mStep%4===0)pNote(SCALE[0]/2,mNext,1.1,.04,'triangle');
+            if(mStep%3===0)pNote(SCALE[idx]*1.5,mNext,.35,.025,'sine');
+            mNext+=.44;mStep++;
         }
+        mRAF=requestAnimationFrame(loop);
+    })();
+}
+function stopM(){
+    mPlaying=false;
+    const mb=document.getElementById('music-btn');
+    mb.textContent='🎵';mb.classList.remove('playing');
+    cancelAnimationFrame(mRAF);
+    mNodes.forEach(n=>{try{n.stop();}catch(e){}});mNodes=[];
+}
 
-        for(let i=0; i<50; i++) petals.push(new Petal());
+/* ===== HERO ANIMS ===== */
+function startHero(){
+    gsap.from('.arch-wrap',{scale:.7,opacity:0,duration:1.4,ease:'back.out(1.5)'});
+    gsap.from('.bless',{y:20,opacity:0,duration:1,delay:.3});
+    gsap.from('.mbless',{y:20,opacity:0,duration:1,delay:.5});
+    gsap.from('.name-g',{y:30,opacity:0,duration:1,delay:.7,stagger:.2});
+    gsap.from('.amp',{scale:0,opacity:0,duration:.8,delay:.9});
+    gsap.from('.mnames',{opacity:0,duration:1,delay:1.1});
+    gsap.from('.datebadge',{y:20,opacity:0,duration:1,delay:1.3});
+    gsap.from('.loctag',{opacity:0,duration:1,delay:1.5});
+    gsap.from('.scrollcue',{opacity:0,duration:1,delay:2});
+    if(GUEST)gsap.from('.guest-greet',{y:15,opacity:0,duration:1,delay:.1});
+}
 
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            petals.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
-        animate();
+/* ===== PARTICLES ===== */
+const CVS=document.getElementById('bgCanvas'),CTX=CVS.getContext('2d');
+let W,H;const PARTS=[];
+function rCVS(){W=CVS.width=window.innerWidth;H=CVS.height=window.innerHeight;}
+window.addEventListener('resize',rCVS);rCVS();
 
-        // --- 3. SCROLL TRIGGERS ---
-        gsap.registerPlugin(ScrollTrigger);
-        
-        gsap.utils.toArray('.royal-card').forEach(card => {
-            gsap.to(card, {
-                scrollTrigger: { trigger: card, start: "top 85%" },
-                y: 0, opacity: 1, duration: 1, ease: "power2.out"
-            });
-        });
-    </script>
+class P{
+    constructor(x,y,b){
+        if(b){this.x=x;this.y=y;this.vx=(Math.random()-.5)*5;this.vy=-Math.random()*6-2;this.alpha=1;this.sz=Math.random()*7+2;this.life=1;this.dec=Math.random()*.025+.01;this.b=true;}
+        else{this.reset();this.y=Math.random()*H;this.b=false;}
+        this.col=['#C9A84C','#F0D080','#A0526F','#8B6914','#FEEC98'][Math.floor(Math.random()*5)];
+        this.shape=Math.random()>.5?'p':'d';
+    }
+    reset(){this.x=Math.random()*W;this.y=-20;this.vx=(Math.random()-.5)*.8;this.vy=Math.random()*.8+.4;this.sz=Math.random()*7+3;this.alpha=Math.random()*.4+.15;this.ang=Math.random()*Math.PI*2;this.sp=(Math.random()-.5)*.03;this.sw=Math.random()*.5;this.st=Math.random()*100;}
+    update(){
+        if(this.b){this.x+=this.vx;this.y+=this.vy;this.vy+=.18;this.life-=this.dec;this.alpha=this.life;return this.life>0;}
+        this.st+=.01;this.x+=this.vx+Math.sin(this.st)*this.sw;this.y+=this.vy;this.ang+=this.sp;
+        if(this.y>H+20||this.x<-20||this.x>W+20)this.reset();return true;
+    }
+    draw(){
+        CTX.save();CTX.globalAlpha=this.alpha;CTX.fillStyle=this.col;
+        if(this.shape==='p'){CTX.translate(this.x,this.y);CTX.rotate(this.ang);CTX.beginPath();CTX.ellipse(0,0,this.sz,this.sz*.45,0,0,Math.PI*2);CTX.fill();}
+        else{CTX.beginPath();CTX.arc(this.x,this.y,this.sz*.4,0,Math.PI*2);CTX.fill();}
+        CTX.restore();
+    }
+}
+for(let i=0;i<60;i++)PARTS.push(new P());
+function aniP(){
+    CTX.clearRect(0,0,W,H);
+    for(let i=PARTS.length-1;i>=0;i--){const a=PARTS[i].update();if(!a)PARTS.splice(i,1);else PARTS[i].draw();}
+    while(PARTS.filter(p=>!p.b).length<60)PARTS.push(new P());
+    requestAnimationFrame(aniP);
+}
+aniP();
+document.addEventListener('click',e=>{
+    if(e.target.closest('#wa-modal')||e.target.closest('#rsvp-modal'))return;
+    for(let i=0;i<14;i++)PARTS.push(new P(e.clientX,e.clientY,true));
+});
+
+/* ===== CURSOR ===== */
+const CD=document.getElementById('cursor'),CR=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;CD.style.left=mx+'px';CD.style.top=my+'px';});
+(function aniC(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;CR.style.left=rx+'px';CR.style.top=ry+'px';requestAnimationFrame(aniC);})();
+document.querySelectorAll('a,button,.acta').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{CD.style.transform='translate(-50%,-50%) scale(2)';CR.style.transform='translate(-50%,-50%) scale(1.5)';});
+    el.addEventListener('mouseleave',()=>{CD.style.transform='translate(-50%,-50%) scale(1)';CR.style.transform='translate(-50%,-50%) scale(1)';});
+});
+
+/* ===== SCROLL PROGRESS ===== */
+window.addEventListener('scroll',()=>{
+    const t=document.documentElement.scrollHeight-window.innerHeight;
+    document.getElementById('progress').style.width=(window.scrollY/t*100)+'%';
+});
+
+/* ===== SCROLL ANIMATIONS ===== */
+gsap.registerPlugin(ScrollTrigger);
+window.addEventListener('load',()=>{
+    document.querySelectorAll('[data-animate="slide-up"]').forEach(el=>{
+        ScrollTrigger.create({trigger:el,start:'top 88%',onEnter:()=>gsap.to(el,{y:0,opacity:1,duration:.9,ease:'power3.out',delay:parseFloat(el.style.transitionDelay)||0})});
+    });
+    document.querySelectorAll('[data-animate="slide-right"]').forEach(el=>{
+        ScrollTrigger.create({trigger:el,start:'top 88%',onEnter:()=>gsap.to(el,{x:0,opacity:1,duration:.9,ease:'power3.out',delay:parseFloat(el.style.transitionDelay)||0})});
+    });
+    document.querySelectorAll('[data-animate="fade-up"]').forEach(el=>{
+        ScrollTrigger.create({trigger:el,start:'top 85%',onEnter:()=>gsap.to(el,{y:0,opacity:1,duration:1,ease:'power3.out',delay:parseFloat(el.style.transitionDelay)||0})});
+    });
+});
+
+/* ===== COUNTDOWN ===== */
+function cd(){
+    const w=new Date('2026-03-15T18:30:00+05:30'),diff=w-new Date();
+    if(diff<=0){['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='00');return;}
+    const d=Math.floor(diff/86400000),h=Math.floor(diff%86400000/3600000),m=Math.floor(diff%3600000/60000),s=Math.floor(diff%60000/1000);
+    document.getElementById('cd-d').textContent=String(d).padStart(2,'0');
+    document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+}
+cd();setInterval(cd,1000);
+
+/* ===== WHATSAPP SHARE ===== */
+const BASE=window.location.origin+window.location.pathname;
+function openWA(){document.getElementById('wa-modal').classList.add('open');updateWAPrev();}
+function closeWA(){document.getElementById('wa-modal').classList.remove('open');}
+function updateWAPrev(){
+    const n=document.getElementById('wa-name').value.trim();
+    const p=document.getElementById('wa-prev');
+    p.textContent=n?BASE+'?guest='+encodeURIComponent(n):'Enter a name above to preview the link...';
+}
+function copyWALink(){
+    const n=document.getElementById('wa-name').value.trim();
+    if(!n){alert('Please enter a guest name!');return;}
+    const link=BASE+'?guest='+encodeURIComponent(n);
+    navigator.clipboard.writeText(link).then(()=>{
+        const b=event.target;b.textContent='✅ COPIED!';setTimeout(()=>b.textContent='📋 COPY LINK',2000);
+    }).catch(()=>prompt('Copy this link:',link));
+}
+function sendWA(){
+    const n=document.getElementById('wa-name').value.trim();
+    if(!n){alert('Please enter a guest name!');return;}
+    const link=BASE+'?guest='+encodeURIComponent(n);
+    const msg=`🙏 नमस्कार ${n} जी!\n\n✨ आपल्याला आमच्या शुभ विवाह सोहळ्यात आमंत्रण आहे!\n\n👰🤵 *Amar & Rutuja Wedding*\n📅 14 & 15 March 2026\n📍 Hotel Blue Ocean Resort, Nashik\n\nआपले personalized invitation:\n${link}\n\n🙏 आपल्या उपस्थितीने आम्हाला आनंद होईल!`;
+    window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+document.getElementById('wa-modal').addEventListener('click',e=>{if(e.target===document.getElementById('wa-modal'))closeWA();});
+
+/* ===== RSVP ===== */
+let rChoice=null;
+function openRSVP(){document.getElementById('rsvp-modal').classList.add('open');}
+function closeRSVP(){document.getElementById('rsvp-modal').classList.remove('open');}
+function selRSVP(el,c){rChoice=c;document.querySelectorAll('.ropt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');}
+function sendRSVP(){
+    const n=document.getElementById('rsvp-name').value.trim();
+    const g=document.getElementById('rsvp-g').value||'1';
+    if(!n){alert('Please enter your name!');return;}
+    if(!rChoice){alert('Please select if you can attend!');return;}
+    const att=rChoice==='yes'?'✅ YES, will attend!':'❌ Sorry, cannot make it';
+    const msg=`🙏 *RSVP - Amar & Rutuja Wedding*\n\nName: *${n}*\nAttending: *${att}*\nTotal Guests: *${g}*\n\n📅 14 & 15 March 2026\n📍 Hotel Blue Ocean Resort, Nashik`;
+    // ⚠️ REPLACE 91XXXXXXXXXX WITH YOUR ACTUAL WHATSAPP NUMBER (no + or spaces)
+    window.open('https://wa.me/91XXXXXXXXXX?text='+encodeURIComponent(msg),'_blank');
+}
+document.getElementById('rsvp-modal').addEventListener('click',e=>{if(e.target===document.getElementById('rsvp-modal'))closeRSVP();});
+
+/* ===== ADD TO CALENDAR ===== */
+function addCal(){
+    const t=encodeURIComponent('Amar & Rutuja Wedding 💍');
+    const d=encodeURIComponent('Haldi: 14 March 5PM\nEngagement: 15 March 11AM\nWedding: 15 March 6:30PM\n\nHotel Blue Ocean Resort, Govardhan, Nashik');
+    const l=encodeURIComponent('Hotel Blue Ocean Resort, YCMOU Road, Govardhan, Nashik, Maharashtra 422222');
+    window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${t}&dates=20260315T130000Z/20260315T183000Z&details=${d}&location=${l}`,'_blank');
+}
+
+/* ===== SAVE THE DATE DOWNLOAD ===== */
+function dlSaveDate(){
+    const c=document.createElement('canvas');c.width=1080;c.height=1080;
+    const cx=c.getContext('2d');
+    const bg=cx.createRadialGradient(540,540,100,540,540,760);
+    bg.addColorStop(0,'#5E0000');bg.addColorStop(1,'#1a0000');
+    cx.fillStyle=bg;cx.fillRect(0,0,1080,1080);
+    cx.strokeStyle='#C9A84C';cx.lineWidth=6;cx.strokeRect(40,40,1000,1000);
+    cx.strokeStyle='rgba(201,168,76,.3)';cx.lineWidth=2;cx.strokeRect(65,65,950,950);
+    const orn=80;cx.strokeStyle='#C9A84C';cx.lineWidth=3;
+    [[85,85],[995,85],[85,995],[995,995]].forEach(([x,y])=>{
+        const dx=x<540?1:-1,dy=y<540?1:-1;
+        cx.beginPath();cx.moveTo(x,y+dy*orn);cx.lineTo(x,y);cx.lineTo(x+dx*orn,y);cx.stroke();
+    });
+    cx.textAlign='center';
+    cx.fillStyle='rgba(201,168,76,.4)';cx.font='26px sans-serif';cx.fillText('WITH THE BLESSINGS OF LORD BUDDHA',540,200);
+    cx.strokeStyle='rgba(201,168,76,.3)';cx.lineWidth=1;cx.beginPath();cx.moveTo(180,225);cx.lineTo(900,225);cx.stroke();
+    const g=cx.createLinearGradient(300,300,780,300);g.addColorStop(0,'#F0D080');g.addColorStop(.5,'#C9A84C');g.addColorStop(1,'#8B6914');
+    cx.fillStyle=g;cx.font='bold 110px serif';cx.fillText('Amar',540,420);
+    cx.fillStyle='#C9A84C';cx.font='italic 56px serif';cx.fillText('&',540,490);
+    cx.fillStyle=g;cx.font='bold 110px serif';cx.fillText('Rutuja',540,600);
+    cx.fillStyle='rgba(201,168,76,.55)';cx.font='34px sans-serif';cx.fillText('— SAVE THE DATE —',540,690);
+    cx.fillStyle='#F0D080';cx.font='bold 58px sans-serif';cx.fillText('14 · 15 MARCH 2026',540,785);
+    cx.fillStyle='rgba(201,168,76,.45)';cx.font='28px sans-serif';cx.fillText('HOTEL BLUE OCEAN RESORT · NASHIK',540,855);
+    cx.fillStyle='rgba(201,168,76,.25)';cx.font='38px serif';cx.fillText('शुभ विवाह सोहळा',540,940);
+    const a=document.createElement('a');a.download='Amar-Rutuja-SaveTheDate.png';a.href=c.toDataURL();a.click();
+}
+</script>
 </body>
 </html>
