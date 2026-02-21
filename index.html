@@ -443,7 +443,7 @@ body{
       </div>
     </div>
     <div class="t-eng-sm sc-el">WITH THE BLESSINGS OF LORD BUDDHA</div>
-    <div class="t-blessing sc-el" style="margin-top:8px">श्री बुद्धांच्या कृपेने</div>
+    <div class="t-blessing sc-el" style="margin-top:8px">भगवान गौतम बुद्धांच्या आशीर्वादाने</div>
     <div class="sc-divider sc-el"></div>
     <div class="guest-greet-wrap sc-el" id="greet0"></div>
     <div class="t-couple sc-el" style="font-size:clamp(2.4rem,7vw,4.5rem)">Amar</div>
@@ -512,7 +512,7 @@ body{
     <div style="font-size:clamp(3rem,10vw,5rem);margin:10px 0" class="sc-el">💛</div>
     <div class="t-event-name sc-el">Haldi Ceremony</div>
     <div class="t-event-m sc-el">हळद समारंभ</div>
-    <div class="t-event-time sc-el">⏱  05:00 PM</div>
+    <div class="t-event-time sc-el">⏱  06:00 PM</div>
     <div class="sc-divider-sym sc-el" style="margin-top:20px"><div class="dl"></div><span>✦</span><div class="dl"></div></div>
     <div class="sc-el" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.95rem,2.8vw,1.2rem);color:rgba(253,248,245,.6);max-width:340px">
       "Where turmeric meets tradition,<br>and joy colours the air golden."
@@ -526,7 +526,7 @@ body{
     <div style="font-size:clamp(3rem,10vw,5rem);margin:10px 0" class="sc-el">💍</div>
     <div class="t-event-name sc-el">Engagement</div>
     <div class="t-event-m sc-el">साखरपुडा समारंभ</div>
-    <div class="t-event-time sc-el">⏱  11:00 AM</div>
+    <div class="t-event-time sc-el">⏱  11:30 AM</div>
     <div class="sc-divider-sym sc-el" style="margin-top:20px"><div class="dl"></div><span>✦</span><div class="dl"></div></div>
     <div class="sc-el" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.95rem,2.8vw,1.2rem);color:rgba(253,248,245,.6);max-width:340px">
       "Two promises made in the sweetness of the morning."
@@ -547,7 +547,7 @@ body{
       The Wedding
     </div>
     <div class="t-event-m sc-el" style="font-size:clamp(1.3rem,4vw,1.8rem);color:var(--rose)">शुभ विवाह सोहळा</div>
-    <div class="t-event-time sc-el" style="color:var(--gold);font-size:.9rem;letter-spacing:3px">⏱  06:30 PM</div>
+    <div class="t-event-time sc-el" style="color:var(--gold);font-size:.9rem;letter-spacing:3px">⏱  07:00 PM</div>
     <div class="sc-divider-sym sc-el" style="margin-top:16px"><div class="dl"></div><span>❋</span><div class="dl"></div></div>
     <div class="sc-el" style="font-family:'Tiro Devanagari Marathi',serif;font-size:clamp(1rem,3vw,1.4rem);color:rgba(212,175,55,.6)">
       विवाह बंधन · पवित्र क्षण
@@ -1057,7 +1057,7 @@ function toggleMode(){
    COUNTDOWN
 ═══════════════════════════════════════════ */
 function cd(){
-  const w=new Date('2026-03-15T18:30:00+05:30'),diff=w-new Date();
+  const w=new Date('2026-03-15T19:00:00+05:30'),diff=w-new Date();
   if(diff<=0){['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='00');return;}
   const d=Math.floor(diff/86400000),h=Math.floor(diff%86400000/3600000),m=Math.floor(diff%3600000/60000),s=Math.floor(diff%60000/1000);
   document.getElementById('cd-d').textContent=String(d).padStart(2,'0');
@@ -1119,9 +1119,9 @@ document.getElementById('rsvp-modal').addEventListener('click',e=>{if(e.target==
 ═══════════════════════════════════════════ */
 function addCal(){
   const t=encodeURIComponent('Amar & Rutuja Wedding 💍');
-  const d=encodeURIComponent('Haldi: 14 March 5PM\nEngagement: 15 March 11AM\nWedding: 15 March 6:30PM\nVenue: Hotel Blue Ocean Resort, Nashik');
+  const d=encodeURIComponent('Haldi: 14 March 6PM\nEngagement: 15 March 11:30AM\nWedding: 15 March 7:00PM\nVenue: Hotel Blue Ocean Resort, Nashik');
   const l=encodeURIComponent('Hotel Blue Ocean Resort, YCMOU Road, Govardhan, Nashik, Maharashtra 422222');
-  window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${t}&dates=20260315T130000Z/20260315T183000Z&details=${d}&location=${l}`,'_blank');
+  window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${t}&dates=20260315T133000Z/20260315T183000Z&details=${d}&location=${l}`,'_blank');
 }
 
 /* ═══════════════════════════════════════════
