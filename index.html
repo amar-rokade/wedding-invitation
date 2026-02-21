@@ -1017,8 +1017,13 @@ const DURATIONS=[6000,5000,5500,5500,5000,5000,6000,6000,0];
 function showScene(idx,first=false){
   const scenes=document.querySelectorAll('.scene');
 
-  // kill any running gsap on all scenes
-  scenes.forEach(s=>gsap.killTweensOf(s));
+  // Kill running animations and FORCE hide any scenes that aren't the current or new one
+  scenes.forEach((s, i) => {
+    gsap.killTweensOf(s);
+    if (i !== idx && !s.classList.contains('cur-scene')) {
+      gsap.set(s, {opacity: 0});
+    }
+  });
 
   const prev=document.querySelector('.scene.cur-scene');
   const sc=scenes[idx];
@@ -1075,8 +1080,10 @@ document.getElementById('stage').addEventListener('touchstart',e=>{tSX=e.touches
 document.getElementById('stage').addEventListener('touchend',e=>{
   const dx=e.changedTouches[0].clientX-tSX;
   const dy=e.changedTouches[0].clientY-tSY;
-  if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){dx<0?nextScene():prevScene();}
-  else if(Math.abs(dy)<30&&Math.abs(dx)<30){if(currentScene<TOTAL-1)nextScene();}
+  // Only handle actual swipes here. Let the 'click' event handle normal taps!
+  if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)){
+    dx<0 ? nextScene() : prevScene();
+  }
 },{passive:true});
 
 // keyboard
